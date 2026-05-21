@@ -1,0 +1,13 @@
+.bgnavbar{
+    background-color: rgb(173, 104, 13);
+}
+
+
+.blog-img img {
+    max-width: 100%;   /* The image will take up 60% of the screen width */
+    height: auto;     /* Automatically adjust height based on aspect ratio */
+    display: block;   /* Make it a block element to center it properly */
+    margin: 20px auto; /* Center the image with margin at the top and bottom */
+    border-radius: 8px; /* Optional: rounded corners for a softer look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+}

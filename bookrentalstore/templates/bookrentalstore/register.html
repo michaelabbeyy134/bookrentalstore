@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Regristration form</title>
+  <link rel="stylesheet" href=" {% static 'https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'%}">
+<link rel="stylesheet" href="{% static 'bookrentalstore/css/ssstyle.css'%}">
+
+<link rel="stylesheet" href="{% static 'bookrentalstore/css/bootstrap.min.css'%}">
+<link rel="stylesheet" href="{% static 'bookrentalstore/css/main.css'%}">
+
+
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="logo text-center">
+  
+</div>
+<div class="wrapper">
+  <div class="inner-warpper text-center">
+    <h2 class="title">Register your account</h2>
+
+<div>
+    {% if messages %}
+          {% for message in messages %}
+                 <p class="alert alert-{{ message.tags}}">{{message}}</p>
+          {% endfor %}  
+    {% endif %}              
+</div>                    
+  
+  
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+    <form id="formvalidate" method="POST">
+          {%csrf_token%}
+
+      <div class="input-group">
+        <!-- <label class="palceholder" for="first_name">First Name</label> -->
+        <input class="form-control" name="first_name" id="first_name" type="text" placeholder="First Name" />
+        <span class="lighting"></span>
+      </div>
+      <div class="input-group">
+        <!-- <label class="placeholder" for="last_name">Last Name</label> -->
+        <input class="form-control" name="last_name" id="last_name" type="text" placeholder="Last Name" />
+        <span class="lighting"></span>
+      </div>
+      <div class="input-group">
+        <!-- <label class="placeholder" for="user_name">User Name</label> -->
+        <input class="form-control" name="username" id="username" type="text" placeholder="User Name" />
+        <span class="lighting"></span>
+      </div>
+      <div class="input-group">
+        <!-- <label class="palceholder" for="phone_number">Phone number</label> -->
+        <input class="form-control" name="phone_number" id="phone_number" type="text" placeholder="Phone Number" />
+        <span class="lighting"></span>
+      </div>
+      <div class="input-group">
+        <!-- <label class="palceholder" for="password1">Password</label> -->
+        <input class="form-control" name="password1" id="password1" type="password" placeholder="Password" />
+        <span class="lighting"></span>
+      </div>
+      <div class="input-group">
+        <!-- <label class="palceholder" for="password2">Confirm Password</label> -->
+        <input class="form-control" name="password2" id="password2" type="password" placeholder="Confirm Password" />
+        <span class="lighting"></span>
+      </div>
+      
+
+
+
+
+
+
+
+
+      <button type="submit" id="">Register</button>
+    </form>
+  </div>
+  <div class="signup-wrapper text-center">
+    <a href="{% url 'login' %}">Already have an account? <span class="text-primary">Login here</span></a>
+  </div>
+</div>
+
+
+
+  
+
+<script src="{% static 'bookrentalstore/js/bootstrap.bundle.min.js'%}">  </script>
+<script src="{% static 'bookrentalstore/js/bootstrap.min.js'%}"></script>
+<script src="{% static 'bookrentalstore/js/jquery-3.7.1.min.js'%}"></script>
+
+
+</body>
+</html>

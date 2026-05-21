@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Rentals</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .no-rentals {
+            text-align: center;
+            color: #888;
+        }
+        .submit-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .submit-button:hover {
+            background-color: #218838;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Rentals</h1>
+
+        {% if user_rentals %}
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Book Title</th>
+                    <th>Rented On</th>
+                    <th>Returned</th>
+                    <th>Due to be returned by</th>
+                    <th>Book Returned</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rental in user_rentals %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ rental.book.title }}</td>
+                    <td>{{ rental.rented_on|date:"Y-m-d H:i" }}</td>
+                    <td>{{ rental.returned|yesno:"Yes,No" }}</td>
+                    <td>{{ rental.due_date|date:"Y-m-d" }}</td>
+                    <td>{{ rental.returned|yesno:"Yes,No" }}</td>
+                    <td>
+                        {% if not rental.returned %}
+                        <a href="{% url 'return_book' rental.id %}">Return Book</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="no-rentals">You haven't rented any books yet.</p>
+        {% endif %}
+        <a href="{% url 'index' %}" class="back-link">Home</a>
+    </div>
+</body>
+</html>

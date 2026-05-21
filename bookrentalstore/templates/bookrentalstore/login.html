@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" >
+<head>
+
+  <meta charset="UTF-8">
+  <title>Login form</title>
+  <link rel="stylesheet" href=" {% static 'https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'%}">
+<link rel="stylesheet" href="{% static 'bookrentalstore/css/ssstyle.css'%}">
+<style>
+  alert {
+    transition: opacity 1s ease-out;
+  }
+</style>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="logo text-center">
+  <h1></h1>
+</div>
+<div class="wrapper">
+  <div class="inner-warpper text-center">
+    <h2 class="title">Login</h2>
+<div>
+    {% if messages %}
+    {% for message in messages %}
+           <p class="alert alert-{{ message.tags}}">{{message}}</p>
+    {% endfor %}  
+{% endif %}              
+</div>
+
+
+
+
+
+
+    <form  id="formvalidate"  method="POST">
+
+      {%csrf_token%}
+
+
+      <div class="input-group">
+        <!-- <label class="palceholder" for="userName">User Name</label> -->
+        <input class="form-control" name="username" id="username" type="text" placeholder="User name" />
+        <span class="lighting"></span>
+      </div>
+      <div class="input-group">
+        <!-- <label class="palceholder" for="userPassword">Password</label> -->
+        <input class="form-control" name="password" id="password" type="password" placeholder="Password" />
+        <span class="lighting"></span>
+      </div>
+      
+
+
+
+      
+
+      <button type="submit" id="login">Login</button>
+      <div class="clearfix supporter">
+        <div class="pull-left remember-me">
+          <input id="rememberMe" type="checkbox">
+          <label for="rememberMe">Remember Me</label>
+       
+    </form>
+  </div>
+  <div class="signup-wrapper text-center">
+    <a href="{% url 'register' %}">Create an account </a>
+  </div>
+</div>
+
+<!-- you don't need that :)  -->
+
+  
+<!-- partial -->
+  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js'></script><script  src="./script.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      setTimeout(function() {
+          var alerts = document.querySelectorAll('.alert');
+          alerts.forEach(function(alert) {
+              alert.style.opacity = 0;
+              setTimeout(function() {
+                  alert.style.display = 'none';
+              }, 1000); // Match the fade-out transition duration
+          });
+      }, 2000); // Delay before hiding messages (2000ms = 2 seconds)
+  });
+</script>
+</body>
+</html>

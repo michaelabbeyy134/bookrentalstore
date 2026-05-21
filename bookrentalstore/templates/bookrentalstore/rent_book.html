@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent Book - {{ book.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .book-details {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #555;
+        }
+
+        .book-details h2 {
+            color: #007BFF;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .submit-button:hover {
+            background-color: #218838;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Rent Book: {{ book.title }}</h1>
+
+    <div class="book-details">
+        <h2>{{ book.title }}</h2>
+        <p><strong>Author:</strong> {{ book.author }}</p>
+        
+    </div>
+
+
+    {% if book.pdf %}
+    <p><strong>Download PDF:</strong> <a href="{{ book.pdf.url }}" target="_blank">Download PDF</a></p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_user_name">Your Name</label>
+            {{ form.user_name }}
+        </div>
+        <div class="form-group">
+            <label for="id_phone_number">Phone Number</label>
+            {{ form.phone_number }}
+        </div>
+        <div class="form-group">
+            <label for="id_rented_on">Rented on</label>
+            <input type="text" id="rented_on" class="form-control" value="{{ rented_on|date:'Y-m-d H:i' }}" readonly>
+            
+        </div>
+        <button type="submit" class="submit-button">Confirm Rent</button>
+    </form>
+
+    <a href="{% url 'available_books' %}" class="back-link">Back to Available Books</a>
+    <a href="{% url 'index' %}" class="back-link">Home</a>
+</div>
+
+</body>
+</html>
