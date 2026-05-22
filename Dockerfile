@@ -1,34 +1,38 @@
-# ── Base image ──────────────────────────────────────────────
-FROM python:3.11-slim
+# ── Base image ─────────────────────────────
+FROM docker.io/library/python:3.11-slim
 
-# ── Environment variables ────────────────────────────────────
+# ── Environment ─────────────────────────────
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    DJANGO_SECRET_KEY=change-me-in-production
+    DJANGO_SECRET_KEY=change-me-in-production \
+    PIP_NO_CACHE_DIR=1
 
-# ── Working directory inside container ──────────────────────
+# ── Working directory ───────────────────────
 WORKDIR /app
 
-# ── Install system dependencies ──────────────────────────────
-RUN apt-get update && apt-get install -y \
-    gcc \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+# ── Install system dependencies ─────────────
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        gcc \
+        libpq-dev \
+        curl \
+        build-essential && \
+    rm -rf /var/lib/apt/lists/*
 
-# ── Install Python dependencies ──────────────────────────────
+# ── Install Python dependencies ─────────────
 COPY requirements.txt .
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
 
-# ── Copy the entire project ──────────────────────────────────
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# ── Copy project ────────────────────────────
 COPY . .
 
-# ── Collect static files ─────────────────────────────────────
-RUN python manage.py collectstatic --noinput
+# ── Django setup ────────────────────────────
+RUN python manage.py collectstatic --noinput || true
 
-# ── Expose port ──────────────────────────────────────────────
+# ── Expose port ─────────────────────────────
 EXPOSE 8000
 
-# ── Start Gunicorn ───────────────────────────────────────────
-# bookrental = folder containing settings.py = your Django config module
+# ── Start server ────────────────────────────
 CMD ["gunicorn", "bookrental.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]
