@@ -10,9 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Get latest code from GitHub
-      - name: Checkout repository
-        uses: actions/checkout@v4
+     
 
       # 2. Deploy to Oracle Linux server via SSH
       - name: SSH Deploy to Server
